@@ -1,0 +1,1 @@
+0 * * * * python3 /app/seederr.py >> /app/seederr.log 2>&1
