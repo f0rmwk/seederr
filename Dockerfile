@@ -27,3 +27,9 @@ RUN crontab /etc/cron.d/seederr-cron
 
 # Start cron in the background
 CMD ["cron", "-f"]
+
+# Set up a default schedule
+ENV SEEDERR_CRON_SCHEDULE="0 * * * *"
+
+# Dynamically create the crontab from the environment variable
+RUN echo "$SEEDERR_CRON_SCHEDULE python3 /app/seederr.py >> /app/seederr.log 2>&1" > /etc/cron.d/seederr-cron
