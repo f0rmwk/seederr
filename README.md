@@ -19,6 +19,14 @@ Seederr is a Python-based automation tool to manage torrents in Deluge. It autom
 
 ## Installation
 
+1. Docker Pull Command
+   
+```docker pull f0rm/seederr```
+
+
+or
+
+
 1. Clone the repository:
     ```
    git clone https://github.com/f0rmwk/seederr.git
@@ -37,7 +45,7 @@ DELUGE_DAEMON_HOST=your-deluge-daemon-ip
 DELUGE_DAEMON_PORT=58846
 DELUGE_DAEMON_USERNAME=localclient
 DELUGE_DAEMON_PASSWORD=your-daemon-password
-MIN_SEED_TIME_SECONDS=1209600  # Two weeks
+MIN_SEED_TIME_SECONDS=1209600  # Two weeks in seconds
 LOG_FILE_PATH=/path/to/seederr.log
 ```
 
