@@ -58,7 +58,7 @@ LOG_FILE_PATH=/path/to/seederr.log
 ### Run with Docker
 
 1. Build the Docker image:
-   `docker build -t seederr` .
+   `docker build -t seederr .`
 
 2. Run the container:
    ```
