@@ -59,10 +59,14 @@ LOG_FILE_PATH=/path/to/seederr.log
 
 1. Build the Docker image:
    `docker build -t seederr .`
+   
+### Scheduling the Script
+By default, the script runs hourly. You can configure the frequency by setting the `SEEDERR_CRON_SCHEDULE` environment variable.
 
 2. Run the container:
    ```
    docker run -d --name seederr \
+       -e SEEDERR_CRON_SCHEDULE="*/0 * * * *" \
        -e DELUGE_WEBUI_URL=http://your-deluge-url:8112 \
        -e DELUGE_WEBUI_PASSWORD=your-webui-password \
        -e DELUGE_DAEMON_HOST=your-deluge-daemon-ip \
