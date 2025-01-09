@@ -7,17 +7,17 @@ WORKDIR /app
 # Copy the local files to the container
 COPY . /app
 
-# Install dependencies
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
-
-# Set the default command to run the script
-CMD ["python", "seederr.py"]
 
 # Install cron
 RUN apt-get update && apt-get install -y cron && rm -rf /var/lib/apt/lists/*
 
-# Copy the crontab file
-COPY crontab /etc/cron.d/seederr-cron
+# Set up an environment variable for the cron schedule
+ENV SEEDERR_CRON_SCHEDULE="0 * * * *"
+
+# Dynamically create the crontab file from the environment variable
+RUN echo "$SEEDERR_CRON_SCHEDULE python3 /app/seederr.py >> /app/seederr.log 2>&1" > /etc/cron.d/seederr-cron
 
 # Set permissions for the crontab file
 RUN chmod 0644 /etc/cron.d/seederr-cron
@@ -25,11 +25,8 @@ RUN chmod 0644 /etc/cron.d/seederr-cron
 # Apply the crontab
 RUN crontab /etc/cron.d/seederr-cron
 
-# Start cron in the background
+# Expose a volume for logs (optional, so logs persist outside the container)
+VOLUME /app/seederr.log
+
+# Start cron in the foreground
 CMD ["cron", "-f"]
-
-# Set up a default schedule
-ENV SEEDERR_CRON_SCHEDULE="0 * * * *"
-
-# Dynamically create the crontab from the environment variable
-RUN echo "$SEEDERR_CRON_SCHEDULE python3 /app/seederr.py >> /app/seederr.log 2>&1" > /etc/cron.d/seederr-cron
