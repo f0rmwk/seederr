@@ -19,13 +19,11 @@ Seederr is a Python-based automation tool to manage torrents in Deluge. It autom
 
 ## Installation
 
-1. Docker Pull Command
+Docker Pull Command
    
 ```docker pull f0rm/seederr```
 
-
 or
-
 
 1. Clone the repository:
     ```
