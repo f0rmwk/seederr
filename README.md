@@ -20,24 +20,26 @@ Seederr is a Python-based automation tool to manage torrents in Deluge. It autom
 ## Installation
 
 1. Clone the repository:
+    ```
    git clone https://github.com/yourusername/seederr.git
    cd seederr
-
-2. Install dependencies:
-   pip install -r requirements.txt
+3. Install dependencies:
+   
+   `pip install -r requirements.txt`
 
 ## Configuration
 
 Edit the script or `.env` file with your Deluge connection details:
-
-DELUGE_WEBUI_URL=http://<your-deluge-url>:8112
-DELUGE_WEBUI_PASSWORD=<your-webui-password>
-DELUGE_DAEMON_HOST=<your-deluge-daemon-ip>
+```
+DELUGE_WEBUI_URL=http://your-deluge-url:8112
+DELUGE_WEBUI_PASSWORD=your-webui-password
+DELUGE_DAEMON_HOST=your-deluge-daemon-ip
 DELUGE_DAEMON_PORT=58846
 DELUGE_DAEMON_USERNAME=localclient
-DELUGE_DAEMON_PASSWORD=<your-daemon-password>
+DELUGE_DAEMON_PASSWORD=your-daemon-password
 MIN_SEED_TIME_SECONDS=1209600  # Two weeks
 LOG_FILE_PATH=/path/to/seederr.log
+```
 
 ## Usage
 
@@ -48,28 +50,28 @@ LOG_FILE_PATH=/path/to/seederr.log
 ### Schedule with Cron
 
 1. Open the crontab editor:
-   crontab -e
+   `crontab -e`
 
 2. Add a cron job to run the script daily:
-   0 0 * * * /usr/bin/python3 /path/to/seederr.py >> /path/to/seederr_cron.log 2>&1
+   `0 0 * * * /usr/bin/python3 /path/to/seederr.py >> /path/to/seederr_cron.log 2>&1`
 
 ### Run with Docker
 
 1. Build the Docker image:
-   docker build -t seederr .
+   `docker build -t seederr` .
 
 2. Run the container:
+   ```
    docker run -d --name seederr \
-       -e DELUGE_WEBUI_URL=http://<your-deluge-url>:8112 \
-       -e DELUGE_WEBUI_PASSWORD=<your-webui-password> \
-       -e DELUGE_DAEMON_HOST=<your-deluge-daemon-ip> \
+       -e DELUGE_WEBUI_URL=http://your-deluge-url:8112 \
+       -e DELUGE_WEBUI_PASSWORD=your-webui-password \
+       -e DELUGE_DAEMON_HOST=your-deluge-daemon-ip \
        -e DELUGE_DAEMON_PORT=58846 \
        -e DELUGE_DAEMON_USERNAME=localclient \
-       -e DELUGE_DAEMON_PASSWORD=<your-daemon-password> \
+       -e DELUGE_DAEMON_PASSWORD=your-daemon-password \
        -e MIN_SEED_TIME_SECONDS=1209600 \
        -v /path/to/logs:/app/logs \
        seederr
-
 ## Logs
 
 Logs are stored in the location specified in the `LOG_FILE_PATH` variable. Ensure the path is writable.
