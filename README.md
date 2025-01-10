@@ -2,13 +2,25 @@
 
 Seederr is a Python-based automation tool to manage torrents in Deluge. It automatically removes torrents that have completed seeding after a user-defined period. Seederr connects to the Deluge WebUI and Daemon RPC to provide seamless torrent management with detailed logging.
 
+![Python](https://img.shields.io/badge/python-3.8%2B-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+
+## Table of Contents
+1. [Features](#features)
+2. [Requirements](#requirements)
+4. [Configuration](#configuration)
+5. [Usage](#usage)
+    - [Run the Script Manually](#run-the-script-manually)
+    - [Run with Docker](#run-with-docker)
+6. [How It Works](#how-it-works)
+7. [Contributing](#contributing)
+8. [License](#license)
+
 ## Features
 
 - Automatically removes torrents based on seeding time and progress.
 - Supports Deluge WebUI and Daemon RPC.
-- Detailed logs for monitoring and troubleshooting.
 - Configurable settings for connection details and thresholds.
-- Works with cron for scheduled execution.
 
 ## Requirements
 
@@ -17,106 +29,89 @@ Seederr is a Python-based automation tool to manage torrents in Deluge. It autom
 - Access to Deluge WebUI and Daemon RPC
 - Optional: Docker for containerized deployment
 
-## Installation
-
-1. Clone the repository:
-    ```
-   git clone https://github.com/f0rmwk/seederr.git
-   cd seederr
-3. Install dependencies:
-   
-   `pip install -r requirements.txt`
-
 ## Configuration
 
-Edit the script or `.env` file with your Deluge connection details:
-```
-DELUGE_WEBUI_URL=http://your-deluge-url:8112
-DELUGE_WEBUI_PASSWORD=your-webui-password
-DELUGE_DAEMON_HOST=your-deluge-daemon-ip
-DELUGE_DAEMON_PORT=58846
-DELUGE_DAEMON_USERNAME=localclient
-DELUGE_DAEMON_PASSWORD=your-daemon-password
-MIN_SEED_TIME_SECONDS=1209600  # Two weeks in seconds
-LOG_FILE_PATH=/path/to/seederr.log
-```
+Seederr is configured using environment variables. Below is a list of variables you can set:
+
+| Variable               | Default Value           | Description                                      |
+|------------------------|-------------------------|--------------------------------------------------|
+| `DELUGE_WEB_URL`       | `http://127.0.0.1:8112` | URL of the Deluge WebUI.                        |
+| `DELUGE_WEB_PASSWORD`  | `secret`               | Password for the Deluge WebUI.                 |
+| `DELUGE_DAEMON_HOST`   | `127.0.0.1`            | Hostname or IP address of the Deluge daemon.    |
+| `DELUGE_DAEMON_PORT`   | `58846`                | Port number for the Deluge daemon.             |
+| `DELUGE_DAEMON_USERNAME` | `localclient`        | Username for the Deluge daemon.                |
+| `DELUGE_DAEMON_PASSWORD` | `secret`            | Password for the Deluge daemon.                |
+| `MIN_AGE_SECONDS`      | `1209600`              | Minimum seeding time (in seconds) before removal. |
+| `TASK_INTERVAL_SECONDS` | `300`                | Interval (in seconds) at which the script runs. |
+
+Edit the script or create a `.env` file with your configuration.
 
 ## Usage
 
 ### Run the Script Manually
 
-   python3 seederr.py
-
-### Schedule with Cron
-
-1. Open the crontab editor:
-   `crontab -e`
-
-2. Add a cron job to run the script daily:
-   `0 0 * * * /usr/bin/python3 /path/to/seederr.py >> /path/to/seederr_cron.log 2>&1`
+Run the script directly:
+```bash
+python3 seederr.py
+```
 
 ### Run with Docker
 
-1. Build the Docker image:
-   `docker build -t seederr .`
-   
-### Scheduling the Script
-By default, the script runs hourly. You can configure the frequency by setting the `SEEDERR_CRON_SCHEDULE` environment variable.
+1. Pull the Docker image:
+   ```bash
+   docker pull f0rm/seederr:latest
+   ```
 
 2. Run the container:
-   ```
+   ```bash
    docker run -d --name seederr \
-       -e SEEDERR_CRON_SCHEDULE="*/0 * * * *" \
-       -e DELUGE_WEBUI_URL=http://your-deluge-url:8112 \
-       -e DELUGE_WEBUI_PASSWORD=your-webui-password \
+       -e DELUGE_WEB_URL=http://your-deluge-url:8112 \
+       -e DELUGE_WEB_PASSWORD=your-webui-password \
        -e DELUGE_DAEMON_HOST=your-deluge-daemon-ip \
        -e DELUGE_DAEMON_PORT=58846 \
        -e DELUGE_DAEMON_USERNAME=localclient \
        -e DELUGE_DAEMON_PASSWORD=your-daemon-password \
-       -e MIN_SEED_TIME_SECONDS=1209600 \
-       -v /path/to/logs:/app/logs \
+       -e MIN_AGE_SECONDS=604800 \
+       -e TASK_INTERVAL_SECONDS=300 \
        seederr
-### Docker-Compose.yml
-```
+   ```
+
+   By default, the script runs every 5 minutes. Customize the interval using the `TASK_INTERVAL_SECONDS` environment variable.
+
+### Use with Docker Compose
+
+To simplify deployment and configuration, you can use Docker Compose. Below is an example `docker-compose.yml` file:
+
+```yaml
 version: "3.8"
 
 services:
   seederr:
+    build:
     image: f0rm/seederr:latest
     container_name: seederr
-    restart: unless-stopped
     environment:
-      # Set Deluge WebUI configuration
-      DELUGE_WEB_URL: "http://localhost:8112"        # Update with your Deluge WebUI URL
-      DELUGE_WEB_PASSWORD: "your_web_password"       # Replace with your WebUI password
-
-      # Set Deluge daemon RPC configuration
-      DELUGE_HOST: "localhost"                   # Replace with your Deluge daemon IP
-      DELUGE_PORT: "58846"                           # Default port for Deluge daemon
-      DELUGE_USERNAME: "localclient"                 # Replace if different
-      DELUGE_PASSWORD: "your_rpc_password"           # Replace with your daemon password
-
-      # Set the minimum seeding age before removal
-      MIN_AGE_SECONDS: "1209600"                     # Default: 14 days (in seconds)
-
-      # Optional: Customize the cron schedule for running seederr
-      SEEDERR_CRON_SCHEDULE: "0 * * * *"             # Default: Run every hour
-
-    volumes:
-      - ./seederr_data:/app                          # Volume for logs and persistent data
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
+      - DELUGE_WEB_URL=http://0.0.0.0:8112
+      - DELUGE_WEB_PASSWORD=your_deluge_web_password
+      - DELUGE_HOST=0.0.0.0
+      - DELUGE_PORT=58846
+      - DELUGE_USERNAME=localclient
+      - DELUGE_PASSWORD=your_daemon_password
+      - MIN_AGE_SECONDS=604800
+      - TASK_INTERVAL_SECONDS=300
+    restart: unless-stopped
 ```
-## Logs
 
-Logs are stored in the location specified in the `LOG_FILE_PATH` variable. Ensure the path is writable.
+## How It Works
+
+1. Seederr connects to the Deluge WebUI and Daemon using the provided credentials.
+2. It fetches the list of torrents and checks their progress and age.
+3. Torrents meeting the configured criteria (e.g., completed seeding for more than 2 weeks) are automatically removed.
+4. Logs are generated to provide detailed information about script activity.
 
 ## Contributing
 
-We welcome contributions! Feel free to open issues or submit pull requests.
+Feel free to open issues or submit pull requests.
 
 ## License
 
