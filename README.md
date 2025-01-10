@@ -36,11 +36,11 @@ Seederr is configured using environment variables. Below is a list of variables 
 | Variable               | Default Value           | Description                                      |
 |------------------------|-------------------------|--------------------------------------------------|
 | `DELUGE_WEB_URL`       | `http://127.0.0.1:8112` | URL of the Deluge WebUI.                        |
-| `DELUGE_WEB_PASSWORD`  | `secret`               | Password for the Deluge WebUI.                 |
+| `DELUGE_WEB_PASSWORD`  | `your_deluge_web_password`| Password for the Deluge WebUI.                 |
 | `DELUGE_DAEMON_HOST`   | `127.0.0.1`            | Hostname or IP address of the Deluge daemon.    |
 | `DELUGE_DAEMON_PORT`   | `58846`                | Port number for the Deluge daemon.             |
 | `DELUGE_DAEMON_USERNAME` | `localclient`        | Username for the Deluge daemon.                |
-| `DELUGE_DAEMON_PASSWORD` | `secret`            | Password for the Deluge daemon.                |
+| `DELUGE_DAEMON_PASSWORD` | `your_daemon_password` | Password for the Deluge daemon.                |
 | `MIN_AGE_SECONDS`      | `1209600`              | Minimum seeding time (in seconds) before removal. |
 | `TASK_INTERVAL_SECONDS` | `300`                | Interval (in seconds) at which the script runs. |
 
