@@ -1,6 +1,6 @@
 # Seederr
 
-Seederr is a Python-based automation tool to manage torrents in Deluge. It automatically removes torrents that have completed seeding after a user-defined period. Seederr connects to the Deluge WebUI and Daemon RPC to provide seamless torrent management with detailed logging.
+Seederr is a Python-based automation tool to manage torrents in Deluge. It automatically removes torrents that have completed seeding after a user-defined period. Seederr connects to the Deluge WebUI and Daemon RPC.
 
 ![Python](https://img.shields.io/badge/python-3.8%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
