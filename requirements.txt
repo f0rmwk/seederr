@@ -1,0 +1,3 @@
+Flask
+deluge-client
+APScheduler
