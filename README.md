@@ -30,9 +30,11 @@ Seederr is a Python-based automation tool to manage torrents in Deluge. It autom
 
 ## Installation  
 ### **Run with Docker**  
+
 ```sh
 docker run -d -p 5588:5588 -v /path/to/config:/data --name seederr f0rm/seederr:latest
 ```
+
 - Access the web UI at **[http://localhost:5588](http://localhost:5588)**  
 - Configure **Deluge RPC**, **seeding limits**, and **scheduling** in the settings  
 - Logs and settings are stored in `/data/` (persistent across restarts)
@@ -40,11 +42,13 @@ docker run -d -p 5588:5588 -v /path/to/config:/data --name seederr f0rm/seederr:
 ### Run with Docker
 
 1. Pull the Docker image:
+   
    ```bash
    docker pull f0rm/seederr:latest
    ```
 
-2. Run the container:
+3. Run the container:
+   
    ```bash
 docker run -d \
   --name seederr \
