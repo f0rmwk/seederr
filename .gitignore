@@ -1,4 +1,33 @@
-*.log
+# Ignore Python cache and compiled files
 __pycache__/
 *.pyc
+*.pyo
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# Ignore environment variables and virtual environments
 .env
+venv/
+env/
+
+# Ignore Docker-related files
+*.pid
+*.sock
+docker-compose.override.yml
+
+# Ignore configuration files (if not meant for public sharing)
+seederr_config.json
+
+# Ignore data and backup directories
+/data/
+storage/
+backup/
+
+# Ignore IDE/editor specific files
+.vscode/
+.idea/
+*.swp
+.DS_Store
