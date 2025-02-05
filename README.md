@@ -36,7 +36,7 @@ docker run -d -p 5588:5588 -v /path/to/config:/data --name seederr f0rm/seederr:
 ```
 
 - Access the web UI at **[http://localhost:5588](http://localhost:5588)**  
-- Configure **Deluge RPC**, **seeding limits**, and **scheduling** in the settings  
+- Configure Deluge RPC, seeding limits, and scheduling in the settings  
 - Logs and settings are stored in `/data/` (persistent across restarts)
 
 ### Run with Docker
@@ -57,7 +57,7 @@ docker run -d -p 5588:5588 -v /path/to/config:/data --name seederr f0rm/seederr:
 
 ### Use with Docker Compose
 
-To simplify deployment and configuration, you can use **Docker Compose**. Below is an example `docker-compose.yml` file:
+Example `docker-compose.yml` file:
 
 ```yaml
 version: "3.8"
@@ -74,10 +74,10 @@ services:
 ```
 ## How It Works
 
-1. Connects to **Deluge RPC** and retrieves torrents  
-2. Removes torrents that exceed **seeding time limits** (default: **14 days**)  
-3. Deletes torrents from **specific trackers** after a shorter time (default: **80 hours**)  
-4. Runs **on-demand** or on a **schedule** 
+1. Connects to Deluge RPC and retrieves torrents  
+2. Removes torrents that exceed seeding time limits (default: 14 days)  
+3. Deletes torrents from specific trackers after a shorter time (default: 80 hours)  
+4. Runs on-demand or on a schedule 
 
 ## Contributing
 
