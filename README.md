@@ -41,26 +41,23 @@ docker run -d -p 5588:5588 -v /path/to/config:/data --name seederr f0rm/seederr:
 
 ### Run with Docker
 
-1. Pull the Docker image:
-   
-   ```bash
+1. **Pull the Docker image:**
+
+   ```sh
    docker pull f0rm/seederr:latest
    ```
 
-3. Run the container:
-   
-   ```bash
-docker run -d \
-  --name seederr \
-  -p 5588:5588 \
-  -v /path/to/config:/data \
-  --restart unless-stopped \
-  f0rm/seederr:latest
+2. **Run the container:**
+
+   ```sh
+   docker run -d      --name seederr      -p 5588:5588      -v /path/to/config:/data      --restart unless-stopped      f0rm/seederr:latest
    ```
+
+---
 
 ### Use with Docker Compose
 
-To simplify deployment and configuration, you can use Docker Compose. Below is an example `docker-compose.yml` file:
+To simplify deployment and configuration, you can use **Docker Compose**. Below is an example `docker-compose.yml` file:
 
 ```yaml
 version: "3.8"
@@ -75,7 +72,6 @@ services:
     volumes:
       - /path/to/config:/data
 ```
-
 ## How It Works
 
 1. Connects to **Deluge RPC** and retrieves torrents  
