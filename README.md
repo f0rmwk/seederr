@@ -49,13 +49,8 @@ docker run -d -p 5588:5588 -v /path/to/config:/data --name seederr f0rm/seederr:
 
 2. **Run the container:**
 
-   ```
-docker run -d \
-  --name seederr \
-  -p 5588:5588 \
-  -v /path/to/config:/data \
-  --restart unless-stopped \
-  f0rm/seederr:latest
+```sh
+   docker run -d      --name seederr      -p 5588:5588      -v /path/to/config:/data      --restart unless-stopped      f0rm/seederr:latest
    ```
 
 ---
