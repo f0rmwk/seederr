@@ -26,7 +26,7 @@ Seederr is a Python-based automation tool to manage torrents in Deluge. It autom
 - Python 3.8 or higher
 - Deluge 2.0 or higher
 - Access to Deluge Daemon RPC
-- Optional: Docker for containerized deployment
+- Docker for containerized deployment
 
 ## Installation  
 ### **Run with Docker**  
